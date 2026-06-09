@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Food Subscription</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+    padding:40px;
+}
+
+.container{
+    width:450px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+h2{
+    text-align:center;
+    color:#ff4d4d;
+    margin-bottom:25px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+textarea{
+    resize:none;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#ff4d4d;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#e63e3e;
+}
+
+.note{
+    text-align:center;
+    margin-top:15px;
+    color:#666;
+    font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Food Subscription</h2>
+
+<form method="POST">
+
+<!-- RESTAURANT -->
+
+<select name="restaurant"
+        id="restaurant"
+        onchange="updateMenu()"
+        required>
+
+<option value="">
+Select Restaurant
+</option>
+
+<option value="Spice Hub">
+Spice Hub
+</option>
+
+<option value="Pizza Palace">
+Pizza Palace
+</option>
+
+<option value="Burger Town">
+Burger Town
+</option>
+
+<option value="South Delight">
+South Delight
+</option>
+
+<option value="Chinese Corner">
+Chinese Corner
+</option>
+
+<option value="Punjabi Dhaba">
+Punjabi Dhaba
+</option>
+
+</select>
+
+<!-- FOOD MENU -->
+
+<select name="food_name"
+        id="food_menu"
+        onchange="calculatePrice()"
+        required>
+
+<option value="">
+Select Food
+</option>
+
+</select>
+
+<!-- PLAN -->
+
+<select name="plan_type"
+        id="plan_type"
+        onchange="calculatePrice()"
+        required>
+
+<option value="">
+Select Plan
+</option>
+
+<option value="Weekly">
+Weekly Plan
+</option>
+
+<option value="Monthly">
+Monthly Plan
+</option>
+
+</select>
+<!-- DELIVERY TIME -->
+
+<select name="delivery_time" required>
+
+<option value="">
+Choose Delivery Time
+</option>
+
+<!-- BREAKFAST -->
+
+<option value="7:00 AM - 7:30 AM">
+7:00 AM - 7:30 AM
+</option>
+
+<option value="7:30 AM - 8:00 AM">
+7:30 AM - 8:00 AM
+</option>
+
+<option value="8:00 AM - 8:30 AM">
+8:00 AM - 8:30 AM
+</option>
+
+<option value="8:30 AM - 9:00 AM">
+8:30 AM - 9:00 AM
+</option>
+
+<!-- LUNCH -->
+
+<option value="12:00 PM - 12:30 PM">
+12:00 PM - 12:30 PM
+</option>
+
+<option value="12:30 PM - 1:00 PM">
+12:30 PM - 1:00 PM
+</option>
+
+<option value="1:00 PM - 1:30 PM">
+1:00 PM - 1:30 PM
+</option>
+
+<option value="1:30 PM - 2:00 PM">
+1:30 PM - 2:00 PM
+</option>
+
+<!-- EVENING -->
+
+<option value="5:00 PM - 5:30 PM">
+5:00 PM - 5:30 PM
+</option>
+
+<option value="5:30 PM - 6:00 PM">
+5:30 PM - 6:00 PM
+</option>
+
+<!-- DINNER -->
+
+<option value="8:00 PM - 8:30 PM">
+8:00 PM - 8:30 PM
+</option>
+
+<option value="8:30 PM - 9:00 PM">
+8:30 PM - 9:00 PM
+</option>
+
+<option value="9:00 PM - 9:30 PM">
+9:00 PM - 9:30 PM
+</option>
+
+<option value="9:30 PM - 10:00 PM">
+9:30 PM - 10:00 PM
+</option>
+
+</select>
+<!-- PRICE -->
+<input type="number"
+       name="price"
+       id="price"
+       placeholder="Subscription Price"
+       readonly>
+
+
+
+<!-- ADDRESS -->
+
+<textarea name="address"
+          rows="4"
+          placeholder="Delivery Address"
+          required></textarea>
+
+<!-- BUTTON -->
+
+<button type="submit">
+Subscribe Now
+</button>
+
+<p class="note">
+Get recurring meals delivered automatically 🚀
+</p>
+
+</form>
+
+</div>
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+function updateMenu(){
+
+    let restaurant =
+    document.getElementById("restaurant").value;
+
+    let menu =
+    document.getElementById("food_menu");
+
+    menu.innerHTML =
+    "<option value=''>Select Food</option>";
+
+    let foods = [];
+
+    // SPICE HUB
+
+    if(restaurant == "Spice Hub"){
+
+        foods = [
+
+            {
+                name:"Paneer Curry",
+                price:200
+            },
+
+            {
+                name:"Butter Naan",
+                price:80
+            },
+
+            {
+                name:"Veg Biryani",
+                price:250
+            },
+
+            {
+                name:"Dal Fry",
+                price:150
+            }
+        ];
+    }
+
+    // PIZZA PALACE
+
+    else if(restaurant == "Pizza Palace"){
+
+        foods = [
+
+            {
+                name:"Margherita Pizza",
+                price:300
+            },
+
+            {
+                name:"Cheese Pizza",
+                price:350
+            },
+
+            {
+                name:"Farmhouse Pizza",
+                price:400
+            },
+
+            {
+                name:"Garlic Bread",
+                price:120
+            }
+        ];
+    }
+
+    // BURGER TOWN
+
+    else if(restaurant == "Burger Town"){
+
+        foods = [
+
+            {
+                name:"Veg Burger",
+                price:120
+            },
+
+            {
+                name:"Cheese Burger",
+                price:150
+            },
+
+            {
+                name:"French Fries",
+                price:90
+            },
+
+            {
+                name:"Cold Coffee",
+                price:100
+            }
+        ];
+    }
+
+    // SOUTH DELIGHT
+
+    else if(restaurant == "South Delight"){
+
+        foods = [
+
+            {
+                name:"Dosa",
+                price:100
+            },
+
+            {
+                name:"Idli",
+                price:80
+            },
+
+            {
+                name:"Vada",
+                price:90
+            },
+
+            {
+                name:"Uttapam",
+                price:120
+            }
+        ];
+    }
+
+    // CHINESE CORNER
+
+    else if(restaurant == "Chinese Corner"){
+
+        foods = [
+
+            {
+                name:"Noodles",
+                price:180
+            },
+
+            {
+                name:"Manchurian",
+                price:200
+            },
+
+            {
+                name:"Fried Rice",
+                price:220
+            },
+
+            {
+                name:"Spring Roll",
+                price:150
+            }
+        ];
+    }
+
+    // PUNJABI DHABA
+
+    else if(restaurant == "Punjabi Dhaba"){
+
+        foods = [
+
+            {
+                name:"Chole Bhature",
+                price:180
+            },
+
+            {
+                name:"Paneer Butter Masala",
+                price:250
+            },
+
+            {
+                name:"Lassi",
+                price:90
+            },
+
+            {
+                name:"Tandoori Roti",
+                price:40
+            }
+        ];
+    }
+
+    // ADD OPTIONS
+
+    for(let i=0; i<foods.length; i++){
+
+        let option =
+        document.createElement("option");
+
+        option.value =
+        foods[i].price;
+
+        option.text =
+        foods[i].name + " - ₹" + foods[i].price;
+
+        menu.appendChild(option);
+    }
+}
+
+// AUTO PRICE CALCULATION
+
+function calculatePrice(){
+
+    let foodPrice =
+    parseInt(
+        document.getElementById("food_menu").value
+    );
+
+    let plan =
+    document.getElementById("plan_type").value;
+
+    let total = 0;
+
+    if(plan == "Weekly"){
+
+        total = foodPrice * 7;
+    }
+
+    else if(plan == "Monthly"){
+
+        total = foodPrice * 30;
+    }
+
+    document.getElementById("price").value =
+    total;
+}
+
+</script>
+
+</body>
+</html>
